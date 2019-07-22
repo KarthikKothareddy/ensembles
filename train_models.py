@@ -10,7 +10,7 @@ matplotlib.use("Agg")
 # import the necessary packages
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
-from ensembles.pyimagesearch.nn.conv import MiniVGGNet
+from ensembles.minivggnet import MiniVGGNet
 from keras.preprocessing.image import ImageDataGenerator
 from keras.optimizers import SGD
 from keras.datasets import cifar10
