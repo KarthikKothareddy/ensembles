@@ -45,22 +45,35 @@ labelNames = ["airplane", "automobile", "bird", "cat", "deer",
 	"dog", "frog", "horse", "ship", "truck"]
 
 # construct the image generator for data augmentation
-aug = ImageDataGenerator(rotation_range=10, width_shift_range=0.1,
-	height_shift_range=0.1, horizontal_flip=True,
-	fill_mode="nearest")
+aug = ImageDataGenerator(
+	rotation_range=10,
+	width_shift_range=0.1,
+	height_shift_range=0.1,
+	horizontal_flip=True,
+	fill_mode="nearest"
+)
 
 # loop over the number of models to train
 for i in np.arange(0, args["num_models"]):
 	# initialize the optimizer and model
 	print("[INFO] training model {}/{}".format(i + 1,
 		args["num_models"]))
-	opt = SGD(lr=0.01, decay=0.01 / 40, momentum=0.9,
-		nesterov=True)
-	model = MiniVGGNet.build(width=32, height=32, depth=3,
-		classes=10)
-	model.compile(loss="categorical_crossentropy", optimizer=opt,
-		metrics=["accuracy"])
-
+	opt = SGD(
+		lr=0.01,
+		decay=0.01 / 40,
+		momentum=0.9,
+		nesterov=True
+	)
+	model = MiniVGGNet.build(
+		width=32, height=32,
+		depth=3,
+		classes=10
+	)
+	model.compile(
+		loss="categorical_crossentropy",
+		optimizer=opt,
+		metrics=["accuracy"]
+	)
 	# train the network
 	H = model.fit_generator(aug.flow(trainX, trainY, batch_size=64),
 		validation_data=(testX, testY), epochs=40,
